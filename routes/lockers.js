@@ -35,4 +35,24 @@ router.delete("/:id", (req, res) => {
   res.send(`Lock with the ${id} deleted from the database`);
 });
 
+// patch to edit locker
+router.patch("/:id", (req, res) => {
+  const { id } = req.params;
+  const { number, room, state } = req.body;
+
+  const lockerToBeUpdated = lockers.find((locker) => locker.id === id);
+
+  if (number) {
+    lockerToBeUpdated.number = number;
+  }
+
+  if (room) {
+    lockerToBeUpdated.room = room;
+
+    if (state) {
+      lockerToBeUpdated.state = state;
+    }
+  }
+});
+
 export default router;
