@@ -1,9 +1,7 @@
 import express from "express";
-import { createLocker, getLockers, getLocker, updateLocker } from "../controllers/lockers.js";
+import { createLocker, getLockers, getLocker, deleteLocker, updateLocker } from "../controllers/lockers.js";
 
 const router = express.Router();
-
-let lockers = [];
 
 /////////////////////// all routes are using /lockers
 // get lockers all
@@ -17,11 +15,7 @@ router.post("/", createLocker);
 router.get("/:id", getLocker);
 
 // delete each locker from the array that has id
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  lockers = lockers.filter((locker) => locker.id !== id);
-  res.send(`Lock with the ${id} deleted from the database`);
-});
+router.delete("/:id", deleteLocker);
 
 // patch to edit locker
 router.patch("/:id", updateLocker);
