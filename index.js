@@ -1,14 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser"; // take body from incoming request
 
-import studentsRoutes from "./routes/students.js";
+import lockersRoutes from "./routes/lockers.js";
 
 const app = express();
 const PORT = 5000;
 
 app.use(bodyParser.json());
 
-app.use("/users", studentsRoutes);
+app.use("/lockers", lockersRoutes);
 
 app.get("/", (req, res) => {
   console.log("testing");
