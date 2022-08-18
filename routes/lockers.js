@@ -1,25 +1,12 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid"; // generate a random id
 
 const router = express.Router();
 
-const lockers = [
-  {
-    number: "001",
-    room: "GV1",
-    state: "occupied",
-    student: "Guilherme",
-  },
-  {
-    number: "002",
-    room: "GV1",
-    state: "free",
-    student: "",
-  },
-];
+let lockers = [];
 
 /////////////////////// all routes are using /lockers
-// get method
+// get lockers all
 router.get("/", (req, res) => {
   res.send(lockers);
 });
@@ -31,6 +18,21 @@ router.post("/", (req, res) => {
   lockers.push({ ...locker, id: uuidv4() });
 
   res.send(`Added locker ${locker.number}`);
+});
+
+// get lockers id to unite
+router.get("/:id", (req, res) => {
+  //colon sign permits anything after the id that has the name of parameters
+  const { id } = req.params;
+  const foundLocker = lockers.id((locker) => locker.id === id);
+  res.send(foundLocker);
+});
+
+// delete each locker from the array that has id
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  lockers = lockers.filter((locker) => locker.id !== id);
+  res.send(`Lock with the ${id} deleted from the database`);
 });
 
 export default router;
